@@ -9,6 +9,7 @@ using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Microsoft.Extensions.Configuration;
+using System;
 
 namespace FunctionLikeEmpleados
 {
@@ -34,12 +35,13 @@ namespace FunctionLikeEmpleados
                 //RESPUESTA DE ERROR
                 return new BadRequestObjectResult("Necesitamos el número de empleados para el LIKE");
             }
-            var config = new ConfigurationBuilder()
-                .SetBasePath(context.FunctionAppDirectory)
-                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables().Build();
+            //var config = new ConfigurationBuilder()
+            //    .SetBasePath(context.FunctionAppDirectory)
+            //    .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
+            //    .AddEnvironmentVariables().Build();
 
-            string cadenaconexion = config.GetConnectionString("hospitalazure");
+            //string cadenaconexion = config.GetConnectionString("hospitalazure");
+            string cadenaconexion = Environment.GetEnvironmentVariable("hospitalazure");
             
                 //@"Data Source=LOCALHOST;Initial Catalog=HOSPITAL;Persist Security Info=True;User ID=SA;Password=azure";
             SqlConnection cn = new SqlConnection(cadenaconexion);
